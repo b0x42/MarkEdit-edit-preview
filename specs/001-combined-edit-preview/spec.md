@@ -50,7 +50,6 @@ This is lightweight, preserves cursor behavior, and works with all existing Mark
 ### NOT in scope
 - Math/KaTeX rendering
 - Mermaid diagrams
-- Tables (complex layout, leave as-is)
 
 ## User Interaction
 

@@ -5,13 +5,14 @@ import { describe, it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { markdown } from '@codemirror/lang-markdown';
+import { GFM } from '@lezer/markdown';
 import { combinedModeExtension } from '../src/combined';
 
 function createView(doc: string, cursorPos = 0): EditorView {
   const state = EditorState.create({
     doc,
     selection: { anchor: cursorPos },
-    extensions: [markdown(), combinedModeExtension()],
+    extensions: [markdown({ extensions: GFM }), combinedModeExtension()],
   });
   return new EditorView({ state });
 }
@@ -158,6 +159,38 @@ describe('combined edit-preview decorations', () => {
       setCombinedMode(view, false);
       const ranges = getDecorationRanges(view);
       expect(ranges.length).toBe(0);
+      view.destroy();
+    });
+  });
+
+  describe('tables', () => {
+    const tableDoc = '| A | B |\n|---|---|\n| 1 | 2 |\n\nother text';
+
+    it('hides pipes and separator when cursor is elsewhere', () => {
+      const view = createView(tableDoc, tableDoc.length - 3); // cursor on "other text"
+      const ranges = getDecorationRanges(view);
+      // Should have decorations for pipe characters and separator row
+      expect(ranges.length).toBeGreaterThan(0);
+      // Separator row starts at pos 10 ("|---|---|") should be hidden
+      expect(ranges.some(r => r.from === 10)).toBe(true);
+      view.destroy();
+    });
+
+    it('reveals raw table when cursor is inside', () => {
+      const view = createView(tableDoc, 3); // cursor inside table header
+      const ranges = getDecorationRanges(view);
+      // Should NOT have any table decorations (pipes should be visible)
+      // No decoration should cover the separator row
+      expect(ranges.some(r => r.from === 9 && r.to === 18)).toBe(false);
+      view.destroy();
+    });
+
+    it('handles multiple tables independently', () => {
+      const doc = '| A | B |\n|---|---|\n| 1 | 2 |\n\ntext\n\n| C | D |\n|---|---|\n| 3 | 4 |';
+      const view = createView(doc, 35); // cursor on "text" between tables
+      const ranges = getDecorationRanges(view);
+      // Both tables should have decorations (pipes hidden in both)
+      expect(ranges.length).toBeGreaterThan(5);
       view.destroy();
     });
   });
