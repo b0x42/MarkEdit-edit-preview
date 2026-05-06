@@ -267,7 +267,7 @@ const combinedPlugin = ViewPlugin.fromClass(
 );
 
 const combinedStyle = EditorView.baseTheme({
-  '.cm-combined-bullet': { fontSize: '1.2em' },
+  '.cm-combined-bullet': { fontSize: '0.9em' },
   '.cm-table-widget': { padding: '4px 0' },
   '.cm-table-widget table': { borderCollapse: 'collapse', width: 'auto', margin: '0' },
   '.cm-table-widget th, .cm-table-widget td': { border: '1px solid #ddd', padding: '8px 12px', textAlign: 'left' },
