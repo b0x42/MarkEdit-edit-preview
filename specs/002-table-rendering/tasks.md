@@ -18,7 +18,7 @@
 
 **Purpose**: Verify GFM table nodes are available in the syntax tree
 
-- [ ] T001 Verify @lezer/markdown GFM Table extension is active in MarkEdit's markdown language config by testing a table document in combined.test.ts
+- [x] T001 Verify @lezer/markdown GFM Table extension is active in MarkEdit's markdown language config by testing a table document in combined.test.ts
 
 ---
 
@@ -30,11 +30,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T002 [US1] Add table parsing helper function (extract headers, alignments, rows from Table node range) in src/combined.ts
-- [ ] T003 [US1] Create TableWidget class extending WidgetType that renders HTML `<table>` with thead/tbody and alignment styles in src/combined.ts
-- [ ] T004 [US1] Add `case 'Table':` to buildDecorations switch — use getBlockRange + rangeInSelection, replace with TableWidget in src/combined.ts
-- [ ] T005 [US1] Add table CSS rules to combinedStyle baseTheme (.cm-table-widget table, td, th) in src/combined.ts
-- [ ] T006 [US1] Update spec 001 to remove tables from "NOT in scope" section in specs/001-combined-edit-preview/spec.md
+- [x] T002 [US1] Add table parsing helper function (extract headers, alignments, rows from Table node range) in src/combined.ts
+- [x] T003 [US1] Create TableWidget class extending WidgetType that renders HTML `<table>` with thead/tbody and alignment styles in src/combined.ts
+- [x] T004 [US1] Add `case 'Table':` to buildDecorations switch — use getBlockRange + rangeInSelection, replace with TableWidget in src/combined.ts
+- [x] T005 [US1] Add table CSS rules to combinedStyle baseTheme (.cm-table-widget table, td, th) in src/combined.ts
+- [x] T006 [US1] Update spec 001 to remove tables from "NOT in scope" section in specs/001-combined-edit-preview/spec.md
 
 **Checkpoint**: Tables render as clean grids when cursor is elsewhere, reveal raw Markdown when cursor enters
 
@@ -48,10 +48,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T007 [P] [US2] Write test: table replaced with widget when cursor is elsewhere in tests/combined.test.ts
-- [ ] T008 [P] [US2] Write test: table shows raw Markdown when cursor is inside in tests/combined.test.ts
-- [ ] T009 [P] [US2] Write test: multiple tables render independently in tests/combined.test.ts
-- [ ] T010 [US2] Run npm run lint && npm test && npm run build to verify all gates pass
+- [x] T007 [P] [US2] Write test: table replaced with widget when cursor is elsewhere in tests/combined.test.ts
+- [x] T008 [P] [US2] Write test: table shows raw Markdown when cursor is inside in tests/combined.test.ts
+- [x] T009 [P] [US2] Write test: multiple tables render independently in tests/combined.test.ts
+- [x] T010 [US2] Run npm run lint && npm test && npm run build to verify all gates pass
 
 **Checkpoint**: `npm test` passes, constitution gate satisfied
 
@@ -59,8 +59,8 @@
 
 ## Phase 4: Polish
 
-- [ ] T011 Verify existing decoration tests still pass (no regressions) via npm test
-- [ ] T012 Build and install plugin via npm run install-plugin
+- [x] T011 Verify existing decoration tests still pass (no regressions) via npm test
+- [x] T012 Build and install plugin via npm run install-plugin
 
 ---
 

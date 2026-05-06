@@ -67,6 +67,35 @@ function buildDecorations(view: EditorView): DecorationSet {
             return;
           }
 
+          case 'Table': {
+            const block = getBlockRange(node, state);
+            if (rangeInSelection(state, block.from, block.to)) return false;
+            // Hide the delimiter row entirely
+            for (const child of node.node.getChildren('TableDelimiter')) {
+              // Only hide full-line delimiters (the separator row), not inline pipe delimiters
+              const line = state.doc.lineAt(child.from);
+              if (/^\|?[\s:|-]+\|?$/.test(state.sliceDoc(line.from, line.to))) {
+                ranges.push(hiddenDeco.range(line.from, line.to));
+                break; // Only one separator row per table
+              }
+            }
+            // Hide pipe characters in header and body rows
+            const tableText = state.sliceDoc(block.from, block.to);
+            let pos = block.from;
+            for (const lineText of tableText.split('\n')) {
+              // Skip separator row (already hidden)
+              if (!/^\|?[\s:|-]+\|?$/.test(lineText)) {
+                for (let i = 0; i < lineText.length; i++) {
+                  if (lineText[i] === '|') {
+                    ranges.push(hiddenDeco.range(pos + i, pos + i + 1));
+                  }
+                }
+              }
+              pos += lineText.length + 1;
+            }
+            return false;
+          }
+
           case 'StrongEmphasis':
           case 'Emphasis': {
             if (rangeInSelection(state, node.from, node.to)) return;
